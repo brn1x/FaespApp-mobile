@@ -22,15 +22,8 @@
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
     "react-native-web": "~0.11.7",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "expo-constants": "~9.0.0"
-=======
+    "expo-constants": "~9.0.0",
     "expo-secure-store": "~8.1.0"
->>>>>>> ae23411a55f55994b58e14e737f3c4cf55104a97
-=======
-    "expo-secure-store": "~8.1.0"
->>>>>>> ae23411a55f55994b58e14e737f3c4cf55104a97
   },
   "devDependencies": {
     "babel-preset-expo": "~8.1.0",
