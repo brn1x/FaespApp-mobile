@@ -1,8 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 export default function Group() {
   return (
-    <View />
+  <View>
+    <Text>Grupos</Text>
+  </View>
   );
 }
