@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { KeyboardAvoidingView, Image, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import api from '../../services/api'
+import * as SecureStore from 'expo-secure-store';
+
+import api from '../../services/api';
 
 import logo from '../../assets/logo.png';
 
@@ -17,7 +19,14 @@ export default function Login() {
   async function handleLogin () {
     const response = await api.post('/session', { login, password });
 
-    if (!response.authorized === true) {
+    if (response.data.authorized === true) {
+      try {
+        await SecureStore.setItemAsync('idAluno', response.data.idAluno.toString())
+        // await SecureStore.setItemAsync('token', response.data.token)
+      } catch (error) {
+        console.log(error)
+      }
+
       Keyboard.dismiss();
       navigation.navigate('Home');
     }

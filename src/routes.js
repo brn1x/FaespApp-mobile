@@ -7,8 +7,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 import Dashboard from './pages/Dashboard'
-import Frequency from './pages/Frequency'
-import Grade from './pages/Grade'
+import GradeFreq from './pages/GradeFreq'
 import Group from './pages/Group'
 import Login from './pages/Login'
 import Subject from './pages/Subject'
@@ -19,8 +18,7 @@ function Home() {
 
       <Drawer.Navigator initialRouteName="Dashboard">
         <Drawer.Screen name="Dashboard" component={Dashboard} />
-        <Drawer.Screen name="Frequency" component={Frequency} />
-        <Drawer.Screen name="Grade" component={Grade} />
+        <Drawer.Screen name="Grade/Frequency" component={GradeFreq} />
         <Drawer.Screen name="Group" component={Group} />
         <Drawer.Screen name="Subject" component={Subject} />
       </Drawer.Navigator>
