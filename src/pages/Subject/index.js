@@ -3,6 +3,8 @@ import { View, Text } from 'react-native';
 
 import api from '../../services/api';
 
+import styles from './styles'
+
 export default function Subject() {
   const [subjects, setSubjects] = useState([]);
 
@@ -21,10 +23,7 @@ export default function Subject() {
   }, []);
 
   return (
-    <View>
-      { subjects.map(sub => (
-        <Text key={sub.idDisciplina}>{sub.descricao}</Text>
-      )) }
+    <View style={styles.container}>
       { subjects.map(sub => (
         <Text key={sub.idDisciplina}>{sub.descricao}</Text>
       )) }

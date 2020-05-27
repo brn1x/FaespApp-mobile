@@ -5,6 +5,8 @@ import * as SecureStore from 'expo-secure-store';
 
 import api from '../../services/api';
 
+import styles from './styles'
+
 export default function GradeFreq() {
   const [grades, setGrades] = useState([]);
   const [idAluno, setIdAluno] = useState('')
@@ -28,7 +30,7 @@ export default function GradeFreq() {
     fillGrades()
   }, [idAluno])
   return (
-    <View>
+    <View style={styles.container}>
       { grades.map(grade => (
         <View key={grade.idMatriculaDisciplina}>
           <Text>{grade.disciplina}</Text>
