@@ -1,21 +1,56 @@
 import { StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
 
-  noGroups: {
-    flex: 1,
+  headerDesc: {
+    margin: 40,
     justifyContent: 'center',
     alignItems: 'center'
   },
 
-  noGroupsText: {
-    margin: 15,
-    textAlign: 'center',
+  headerImage: {
+    backgroundColor: '#999',
+    padding: 10,
+    borderRadius: 5,
+  },
+
+  groupInfo: {
+    flex: 1,
+    marginLeft: 25,
+    marginRight: 25,
+  },
+
+  groupNameText: {
     fontSize: 25,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+
+  groupCategoryText: {
+    fontSize: 16,
+    fontWeight: '300',
+    color: '#999',
+    marginBottom: 15
+  },
+
+  groupDescText: {
+    fontSize: 15,
     fontWeight: 'bold'
+  },
+
+  groupDescriptionText: {
+    fontSize: 14,
+    color: '#222',
+    marginBottom: 10,
+  },
+
+  groupInfoText: {
+    fontSize: 14,
+    color: '#666',
   },
 
   button: {
@@ -44,11 +79,6 @@ export default StyleSheet.create({
   },
 
   buttonContainer: {
-    marginBottom: 15
+    margin: 15,
   },
-
-  groupList: {
-    flex: 1,
-    marginBottom: 15
-  }
-})
+});

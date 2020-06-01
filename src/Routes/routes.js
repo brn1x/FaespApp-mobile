@@ -55,6 +55,7 @@ export default function Routes () {
         const userToken = API_SECRET_KEY;
 
         try {
+          await SecureStore.setItemAsync('ra', login)
           await SecureStore.setItemAsync('idAluno', response.data.idAluno.toString());
           await SecureStore.setItemAsync('username', response.data.name);
           await SecureStore.setItemAsync('avatar', response.data.avatar);
@@ -70,6 +71,7 @@ export default function Routes () {
     },
     signOut: async () => {
       try {
+        await SecureStore.deleteItemAsync('ra')
         await SecureStore.deleteItemAsync('idAluno');
         await SecureStore.deleteItemAsync('username');
         await SecureStore.deleteItemAsync('avatar');

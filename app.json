@@ -4,8 +4,7 @@
     "slug": "faespapp",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +21,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.faesp.faespapp"
+    },
+    "android": {
+      "package": "com.faesp.faespapp"
     }
   }
 }

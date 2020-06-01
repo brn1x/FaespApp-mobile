@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import Header from '../../components/Header'
+
+import { Feather } from '@expo/vector-icons/'
 
 import * as SecureStore from 'expo-secure-store';
 
+import styles from './styles'
+
 import api from '../../services/api';
 
-export default function GradeFreq() {
+export default function GradeFreq({ navigation }) {
   const [grades, setGrades] = useState([]);
   const [idAluno, setIdAluno] = useState('')
 
@@ -28,14 +33,17 @@ export default function GradeFreq() {
     fillGrades()
   }, [idAluno])
   return (
-    <View>
-      { grades.map(grade => (
-        <View key={grade.idMatriculaDisciplina}>
-          <Text>{grade.disciplina}</Text>
-          <Text>{grade.notaFinal}</Text>
-          <Text>Frequencia: {grade.frequencia}</Text>
-        </View>
-      )) }
-    </View>
+    <>
+      <Header navigation={navigation} titleText={'Frequência / Notas'}/>
+      <View style={styles.container}>
+        { grades.map(grade => (
+          <View key={grade.idMatriculaDisciplina}>
+            <Text>{grade.disciplina}</Text>
+            <Text>{grade.notaFinal}</Text>
+            <Text>Frequencia: {grade.frequencia}</Text>
+          </View>
+        )) }
+      </View>
+    </>
   );
 }

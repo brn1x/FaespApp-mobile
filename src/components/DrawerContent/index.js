@@ -41,7 +41,7 @@ export default function DrawerContent (props) {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={styles.headerContent}>
-              <Avatar.Image source={{ uri: avatar }} size={50} />
+              <Avatar.Image source={{ uri: avatar || 'https://faesp.jacad.com.br/academico/images/perfil/6749/100' }} size={50} />
               <View style={styles.headerTexts}>
                 <Title style={styles.title}>{ username }</Title>
                 <Caption style={styles.caption}>{ course }</Caption>

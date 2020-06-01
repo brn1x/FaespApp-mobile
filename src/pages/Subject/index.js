@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import Header from '../../components/Header'
+
+import styles from './styles'
+import { Feather } from '@expo/vector-icons/'
 
 import api from '../../services/api';
 
-export default function Subject() {
+export default function Subject({ navigation }) {
   const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
@@ -21,13 +25,16 @@ export default function Subject() {
   }, []);
 
   return (
-    <View>
-      { subjects.map(sub => (
-        <Text key={sub.idDisciplina}>{sub.descricao}</Text>
-      )) }
-      { subjects.map(sub => (
-        <Text key={sub.idDisciplina}>{sub.descricao}</Text>
-      )) }
-    </View>
+    <>
+      <Header navigation={navigation} titleText={'Disciplinas'}/>
+      <View style={styles.container}>
+        { subjects.map(sub => (
+          <Text key={sub.idDisciplina}>{sub.descricao}</Text>
+        )) }
+        { subjects.map(sub => (
+          <Text key={sub.idDisciplina}>{sub.descricao}</Text>
+        )) }
+      </View>
+    </>
   );
 }
