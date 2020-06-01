@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import Header from '../../components/Header'
-
-import { Feather } from '@expo/vector-icons/'
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -11,6 +9,7 @@ import styles from './styles'
 import api from '../../services/api';
 
 export default function GradeFreq({ navigation }) {
+
   const [grades, setGrades] = useState([]);
   const [idAluno, setIdAluno] = useState('')
 

@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Header from '../../components/Header'
 
 import styles from './styles'
-import { Feather } from '@expo/vector-icons/'
 
 import api from '../../services/api';
 
@@ -28,9 +27,6 @@ export default function Subject({ navigation }) {
     <>
       <Header navigation={navigation} titleText={'Disciplinas'}/>
       <View style={styles.container}>
-        { subjects.map(sub => (
-          <Text key={sub.idDisciplina}>{sub.descricao}</Text>
-        )) }
         { subjects.map(sub => (
           <Text key={sub.idDisciplina}>{sub.descricao}</Text>
         )) }
