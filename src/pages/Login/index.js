@@ -42,7 +42,6 @@ export default function Login() {
           />
 
           <TextInput 
-            style={styles.formInput} 
             style={styles.formInput}
             autoCapitalize="none"
             autoCorrect={false}
