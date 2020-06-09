@@ -18,12 +18,12 @@ export default function GradeFreq({ navigation }) {
       try {
         await SecureStore.getItemAsync('idAluno')
           .then(result => {
-            setIdAluno(result)
+            setIdAluno(result);
           })
 
         await api.get('/grades/', { headers: { 'X-LOGGED-USER': idAluno } })
           .then(response => {
-            setGrades(response.data)
+            setGrades(response.data);
           })
       } catch (error) {
         console.log(error)

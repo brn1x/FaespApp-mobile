@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Feather'
@@ -11,17 +12,27 @@ import api from '../../services/api';
 
 export default function GroupList ({ navigation }) {
   const [groups, setGroups] = useState([])
+  const [ra, setRa] = useState('')
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    async function fillGroups () {
-      await api.get('/groups')
-        .then(result => {
-          setGroups(result.data);
-        });
+    async function fillRaStudent () {
+      try {
+        await SecureStore.getItemAsync('ra')
+          .then(result => {
+            setRa(result);
+          })
+
+        await api.get('/groups', { headers: { 'X-LOGGED-USER': ra } })
+          .then(result => {
+            setGroups(result.data);
+          })
+      } catch (error) {
+        console.log(error);
+      }
     }
-  fillGroups();    
-  }, [])
+    fillRaStudent();
+  }, [ra])
 
   function moveToDescGroup (group) {
     const type = 'register'

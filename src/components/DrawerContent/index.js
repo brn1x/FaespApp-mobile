@@ -26,10 +26,10 @@ export default function DrawerContent (props) {
 
         await SecureStore.getItemAsync('avatar')
           .then(result => {
-            setAvatar(result)
+            setAvatar(result);
           })
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
     fillUserInfo();

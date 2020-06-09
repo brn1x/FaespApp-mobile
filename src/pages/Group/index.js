@@ -68,9 +68,7 @@ export default function Group ({ navigation, route }) {
               data={groups}
               keyExtractor={(group) => group.id.toString()}
               renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => moveToDescGroup(item)}>
-                  <GroupCard group={item} />
-                </TouchableOpacity>
+                <GroupCard group={item} move={moveToDescGroup} />
               )}
             />
           </View>
