@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { View, FlatList, TouchableOpacity, TextInput, Text } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 import styles from './styles';
@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Feather'
 
 import GroupCard from '../../components/GroupCard'
 import Header from '../../components/Header'
+import DismissKeyboard from '../../components/DismissKeyboard'
 
 import api from '../../services/api';
 
@@ -36,13 +37,17 @@ export default function GroupList ({ navigation }) {
 
   function moveToDescGroup (group) {
     const type = 'register'
-    navigation.navigate('GroupDescription', { group, type })
+    navigation.navigate('GroupDescription', { group, type });
+  }
+
+  function createGroupForm () {
+    navigation.navigate('GroupFormCreate');
   }
 
   return (
-    <>
-      <Header btnType='goBack' navigation={navigation} titleText={'Adicionar Grupo'} />
+    <DismissKeyboard>
       <View style={styles.container}>
+        <Header btnType='goBack' navigation={navigation} titleText={'Adicionar Grupo'} />
         <View style={styles.filterBox}>
           <Icon style={styles.filterIcon} name="search" size={20} color="#999" />
           <TextInput
@@ -61,7 +66,12 @@ export default function GroupList ({ navigation }) {
             <GroupCard group={item} move={moveToDescGroup} />
           )}
         />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={createGroupForm}>
+            <Text style={styles.buttonText}>Criar Novo Grupo</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </>
+    </DismissKeyboard>
   );
 }

@@ -26,5 +26,35 @@ export default StyleSheet.create({
 
   filterIcon: {
     marginLeft: 4
-  }
+  },
+
+  button: {
+    height: 46,
+    width: 300,
+    alignSelf: 'center',
+    backgroundColor: '#183196',
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+
+  buttonText: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
+  buttonContainer: {
+    marginTop: 15,
+    marginBottom: 15
+  },
 });

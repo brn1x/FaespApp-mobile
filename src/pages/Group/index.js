@@ -8,7 +8,6 @@ import api from '../../services/api'
 
 import styles from './styles'
 import Icon from 'react-native-vector-icons/Feather'
-import { Feather } from '@expo/vector-icons/'
 
 export default function Group ({ navigation, route }) {
   const [groups, setGroups] = useState([]);
@@ -17,28 +16,20 @@ export default function Group ({ navigation, route }) {
   const { refresh } = route.params
 
   useEffect(() => {
-    async function fillRa() {
+    async function fillGroups() {
       try {
         await SecureStore.getItemAsync('ra')
-            .then(result => {
-              setRa(result)
-            })
+          .then(result => {
+            setRa(result)
+          })
+
+        await api.get('/subscription', { headers: { 'X-LOGGED-USER': ra } })
+          .then(result => {
+            setGroups(result.data.groups);
+          })
       } catch (error) {
         console.log(error)
       }        
-    }
-    fillRa();
-  }, [])
-
-  useEffect(() => {
-    async function fillGroups () {
-      await api.get('/subscription', { headers: { 'X-LOGGED-USER': ra } })
-        .then(result => {
-          setGroups(result.data.groups);
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
     fillGroups();
     route.params.refresh = false;

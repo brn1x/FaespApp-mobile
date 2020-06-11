@@ -8,8 +8,6 @@ import api from '../../services/api';
 import Header from '../../components/Header'
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Feather'
-import { Feather } from '@expo/vector-icons/'
-
 
 export default function GroupDescription ({ navigation }) {
   const [ra, setRa] = useState('');
