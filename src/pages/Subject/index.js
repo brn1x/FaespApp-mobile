@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import Header from '../../components/Header'
 
 import styles from './styles'
@@ -27,9 +27,15 @@ export default function Subject({ navigation }) {
     <>
       <Header navigation={navigation} titleText={'Disciplinas'}/>
       <View style={styles.container}>
-        { subjects.map(sub => (
-          <Text key={sub.idDisciplina}>{sub.descricao}</Text>
-        )) }
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
+          { subjects.map(sub => (
+            <View style={styles.card} key={sub.idDisciplina}>
+              <Text style={styles.subject}>{sub.descricao}</Text>
+            </View>
+          )) }
+        </ScrollView>
       </View>
     </>
   );

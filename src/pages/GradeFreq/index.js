@@ -41,7 +41,7 @@ export default function GradeFreq({ navigation }) {
     <>
       <Header navigation={navigation} titleText={'Frequência / Notas'}/>
       <View style={styles.container}>
-      <Text style={styles.title}>{semester}</Text>
+        <Text style={styles.title}>{semester}</Text>
         <ScrollView 
           style={styles.cardList}
           showsVerticalScrollIndicator={false}
