@@ -10,7 +10,6 @@ export default StyleSheet.create({
     minHeight: 270,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
   },
 
   input: {
@@ -28,8 +27,8 @@ export default StyleSheet.create({
 
   inputDescription: {
     flex: 1,
-    minHeight: 25,
-    maxHeight: 190,
+    minHeight: 60,
+    maxHeight: 140,
     borderWidth: 1,
     borderColor: '#666',
     borderRadius: 5,
@@ -66,7 +65,7 @@ export default StyleSheet.create({
     borderColor: '#666',
     borderRadius: 5,
     paddingHorizontal: 15,
-    height: 30,
+    height: 35,
     width: 120,
     margin: 5,
     textAlign: 'center',
@@ -95,7 +94,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: '#666',
     borderRadius: 5,
-    width: 120,
+    width: 140,
     margin: 8,
     paddingHorizontal: 8,
     textAlign: 'center',
@@ -106,5 +105,16 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     margin: 5
+  },
+
+  errorTextDouble: {
+    color: 'crimson',
+    fontWeight: 'bold',
+    width: 120
+  },
+
+  errorText: {
+    color: 'crimson',
+    fontWeight: 'bold'
   }
 })
