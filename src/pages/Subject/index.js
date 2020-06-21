@@ -5,23 +5,34 @@ import Header from '../../components/Header'
 import styles from './styles'
 
 import api from '../../services/api';
+import * as SecureStore from 'expo-secure-store';
 
 export default function Subject({ navigation }) {
   const [subjects, setSubjects] = useState([]);
+  const [token, setToken] = useState('');
 
   useEffect(() => {
     async function fillSubjects() {
       try {
-        await api.get('/subjects/')
+        await SecureStore.getItemAsync('token')
+          .then(result => {
+            setToken(result);
+          })
+
+        await api.get('/subjects/', {
+          headers: {
+            authorization: token
+          }
+        })
           .then(response => {
-            setSubjects(response.data.list)
+            setSubjects(response.data.list);
           })
       } catch (error) {
-        console.log('Erro ao buscar as matérias');
+        console.log(error);
       }
     }
-    fillSubjects()
-  }, []);
+    fillSubjects();
+  }, [token]);
 
   return (
     <>

@@ -20,23 +20,38 @@ export default function GroupFormCreate ({ navigation }) {
   const [campus, setCampus] = useState('');
   const [ra, setRa] = useState('');
 
+  const [token, setToken] = useState('');
+
   const [categories, setCategories] = useState([]);
   const [campuses, setCampuses] = useState([]);
 
   useEffect(() => {
     async function fillInfo () {
       try {
+        await SecureStore.getItemAsync('token')
+          .then(result => {
+            setToken(result);
+          });
+
         await SecureStore.getItemAsync('ra')
           .then(result => {
-            setRa(result)
-          })
+            setRa(result);
+          });
   
-        api.get('/categories')
+        await api.get('/categories', {
+          headers: {
+            authorization: token
+          }
+        })
           .then(result => {
             setCategories(result.data);
           });
     
-        api.get('/campus')
+        await api.get('/campus', {
+          headers: {
+            authorization: token
+          }
+        })
           .then(result => {
             setCampuses(result.data);
           });
@@ -48,6 +63,8 @@ export default function GroupFormCreate ({ navigation }) {
   }, [ra]);
 
   async function createGroup () {
+    // Alert: Validate Form
+
     const data = {
       name,
       description,
@@ -59,8 +76,15 @@ export default function GroupFormCreate ({ navigation }) {
       period,
     }
 
-    console.log(data)
-    api.post('/groups', data, { headers: { 'x-logged-user': ra } })
+    await api.post('/groups', data, {
+      headers: { 
+        'x-logged-user': ra,
+        authorization: token
+      } 
+    })
+
+    // Alert: Group creation request created
+    navigation.goBack();
   }
 
   return (

@@ -13,21 +13,36 @@ export default function GradeFreq({ navigation }) {
   const [grades, setGrades] = useState([]);
   const [semester, setSemester] = useState('');
   const [idAluno, setIdAluno] = useState('');
+  const [token, setToken] = useState('');
 
   useEffect(() => {
     async function fillGrades () {
       try {
+        await SecureStore.getItemAsync('token')
+          .then(result => {
+            setToken(result);
+          })
+
         await SecureStore.getItemAsync('idAluno')
           .then(result => {
             setIdAluno(result);
           })
 
-        await api.get('/grades/', { headers: { 'X-LOGGED-USER': idAluno } })
+        await api.get('/grades/', { 
+          headers: {
+            'X-LOGGED-USER': idAluno,
+            authorization: token
+          } 
+        })
           .then(response => {
             setGrades(response.data);
           })
 
-        await api.get('/semesters/')
+        await api.get('/semesters/', {
+          headers: {
+            authorization: token
+          }
+        })
           .then(response => {
             setSemester(response.data.name)
           })

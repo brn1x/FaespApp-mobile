@@ -10,8 +10,6 @@ import { AuthContext } from '../components/context'
 import * as SecureStore from 'expo-secure-store';
 import api from '../services/api';
 
-import { API_SECRET_KEY } from 'react-native-dotenv'
-
 export default function Routes () {
   const initialLoginState = {
     isLoading: true,
@@ -51,20 +49,18 @@ export default function Routes () {
     signIn: async (login, password) => {
       const response = await api.post('/session', { login, password });
 
-      if (response.data.authorized === true) {
-        const userToken = API_SECRET_KEY;
-
+      if (response.data.token) {
         try {
           await SecureStore.setItemAsync('ra', login)
           await SecureStore.setItemAsync('idAluno', response.data.idAluno.toString());
           await SecureStore.setItemAsync('username', response.data.name);
           await SecureStore.setItemAsync('avatar', response.data.avatar);
-          await SecureStore.setItemAsync('token', userToken);
+          await SecureStore.setItemAsync('token', response.data.token);
         } catch (error) {
           console.log(error);
         }
 
-        dispatch({ type: 'LOGIN', token: userToken, logged: true });
+        dispatch({ type: 'LOGIN', token: response.data.token, logged: true });
       } else {
         dispatch({ type: 'LOGOUT' });
       }

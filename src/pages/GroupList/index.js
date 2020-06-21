@@ -12,19 +12,30 @@ import DismissKeyboard from '../../components/DismissKeyboard'
 import api from '../../services/api';
 
 export default function GroupList ({ navigation }) {
-  const [groups, setGroups] = useState([])
-  const [ra, setRa] = useState('')
-  const [filter, setFilter] = useState('')
+  const [groups, setGroups] = useState([]);
+  const [ra, setRa] = useState('');
+  const [filter, setFilter] = useState('');
+  const [token, setToken] = useState('');
 
   useEffect(() => {
     async function fillRaStudent () {
       try {
+        await SecureStore.getItemAsync('token')
+          .then(result => {
+            setToken(result);
+          });
+
         await SecureStore.getItemAsync('ra')
           .then(result => {
             setRa(result);
           })
 
-        await api.get('/groups', { headers: { 'X-LOGGED-USER': ra } })
+        await api.get('/groups', {
+          headers: {
+            'X-LOGGED-USER': ra,
+            authorization: token
+          }
+        })
           .then(result => {
             setGroups(result.data);
           })

@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/Feather'
 
 export default function GroupDescription ({ navigation }) {
   const [ra, setRa] = useState('');
+  const [token, setToken] = useState('');
   const route = useRoute();
 
   const group = route.params.group;
@@ -19,6 +20,11 @@ export default function GroupDescription ({ navigation }) {
   useEffect(() => {
     async function fillRa() {
       try {
+        await SecureStore.getItemAsync('token')
+          .then(result => {
+            setToken(result);
+          });
+
         await SecureStore.getItemAsync('ra')
           .then(result => {
             setRa(result);
@@ -31,8 +37,16 @@ export default function GroupDescription ({ navigation }) {
   }, [])
 
   async function handleSubscribe (groupId) {
+    // Alert: Deseja mesmo se inscrever nesse grupo?
     try {
-      await api.post(`subscription/${groupId}`, { ra })
+      await api.post(`subscription/${groupId}`, {
+        data: {
+          ra
+        },
+        headers: {
+          authorization: token
+        }
+      })
       navigation.navigate('GroupHome', { refresh: true })
     } catch (error) {
       console.log(error)
@@ -40,8 +54,16 @@ export default function GroupDescription ({ navigation }) {
   }
 
   async function handleUnsubscribe (groupId) {
+    // Alert: Deseja mesmo se desinscrever desse grupo?
     try {
-      await api.delete(`subscription/${groupId}`, { data: { ra } })
+      await api.delete(`subscription/${groupId}`, {
+        data: {
+          ra
+        },
+        headers: {
+          authorization: token
+        } 
+      })
       navigation.navigate('GroupHome', { refresh: true })
     } catch (error) {
       console.log(error)
