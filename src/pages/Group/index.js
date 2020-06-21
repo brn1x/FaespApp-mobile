@@ -12,18 +12,29 @@ import Icon from 'react-native-vector-icons/Feather'
 export default function Group ({ navigation, route }) {
   const [groups, setGroups] = useState([]);
   const [ra, setRa] = useState('');
+  const [token, setToken] = useState('');
 
   const { refresh } = route.params
 
   useEffect(() => {
     async function fillGroups() {
       try {
+        await SecureStore.getItemAsync('token')
+          .then(result => {
+            setToken(result);
+          });
+
         await SecureStore.getItemAsync('ra')
           .then(result => {
-            setRa(result)
-          })
+            setRa(result);
+          });
 
-        await api.get('/subscription', { headers: { 'X-LOGGED-USER': ra } })
+        await api.get('/subscription', {
+          headers: { 
+            'X-LOGGED-USER': ra,
+            authorization: token
+          } 
+        })
           .then(result => {
             setGroups(result.data.groups);
           })
