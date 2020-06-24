@@ -7,15 +7,23 @@ export default StyleSheet.create({
   },
 
   card: {
-    flex: 1,
-    padding: 16,
-    margin: 8,
-    marginHorizontal: 20,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#333',
-    alignItems: 'center',
-    backgroundColor: '#dfe3f0'
+    alignContent: 'center',
+    justifyContent: 'center',
+    padding: 24,
+
+    backgroundColor: '#FBFBFB',
+    borderRadius: 8,
+    margin: 15,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
   },
 
   subject: {

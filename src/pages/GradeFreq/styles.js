@@ -4,7 +4,6 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ecf1f8',
-    alignItems: 'center',
   },
 
   title: {
@@ -12,6 +11,7 @@ export default StyleSheet.create({
     marginVertical: 20,
     fontSize: 18,
     fontWeight: '700',
+    alignSelf: 'center'
   },
 
   cardList: {
@@ -20,18 +20,27 @@ export default StyleSheet.create({
   },
 
   gradeCard: {
-    backgroundColor: '#dfe3f0',
-    flex: 1,
-    minWidth: 280,
-    padding: 10,
-    margin: 10,
-    borderWidth: 1,
-    borderColor: '#333',
-    borderRadius: 10,
+    alignContent: 'center',
+    justifyContent: 'center',
+    padding: 8,
+
+    backgroundColor: '#FBFBFB',
+    borderRadius: 8,
+    margin: 15,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
   },
 
   cardTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '700',
     color: '#333',
     padding: 10,
@@ -46,7 +55,7 @@ export default StyleSheet.create({
   },
 
   cardGrade: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '300',
     color: '#444'
   }

@@ -38,11 +38,11 @@ export default function GroupDescription ({ navigation }) {
 
   async function handleSubscribe (groupId) {
     // Alert: Deseja mesmo se inscrever nesse grupo?
+    const data = {
+      ra
+    }
     try {
-      await api.post(`subscription/${groupId}`, {
-        data: {
-          ra
-        },
+      await api.post(`subscription/${groupId}`, data, {
         headers: {
           authorization: token
         }
@@ -82,10 +82,7 @@ export default function GroupDescription ({ navigation }) {
             <Text style={styles.groupNameText}>{group.name}</Text>
             <Text style={styles.groupCategoryText}>{group.category.name}</Text>
             <Text style={styles.groupDescText}>Descrição</Text>
-            <Text style={styles.groupDescriptionText}>Lorem ipsum dolor sit amet, purto illum accumsan mei ne. Per an percipitur sadipscing, tollit complectitur ne pri.
-            Lorem ipsum dolor sit amet, purto illum accumsan mei ne. Per an percipitur sadipscing, tollit complectitur ne pri.
-            Lorem ipsum dolor sit amet, purto illum accumsan mei ne. Per an percipitur sadipscing, tollit complectitur ne pri.
-            Lorem ipsum dolor sit amet, purto illum accumsan mei ne. Per an percipitur sadipscing, tollit complectitur ne pri.</Text>
+            <Text style={styles.groupDescriptionText}>{group.description}</Text>
             <Text style={styles.groupInfoText}><Text style={{ fontWeight: 'bold' }}>Participantes: </Text> {group.students.length}/{group.qtt_max_students}</Text>
             <Text style={styles.groupInfoText}><Text style={{ fontWeight: 'bold' }}>Campus: </Text>{group.campus.name}</Text>
             <Text style={styles.groupInfoText}><Text style={{ fontWeight: 'bold' }}>Periodo: </Text> {group.period}</Text>

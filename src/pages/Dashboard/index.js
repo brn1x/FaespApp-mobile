@@ -89,10 +89,9 @@ export default function Dashboard({ navigation }) {
             <Text style={styles.cardTitleText}>Últimos Avisos</Text>
           </View>
           <ScrollView showsVerticalScrollIndicator={false} >
-            <InfoCard />
-            <InfoCard />
-            <InfoCard />
-            <InfoCard />
+            <InfoCard infoTitle="Aulas EAD" info="Devido a pandemia do Corona Vírus, a faculdade está funcionado com aulas ead" />
+            <InfoCard infoTitle="Provas" info="A prova será feita de forma EAD, pois os alunos não poderão estar presentes na salas de aulas" />
+            <InfoCard infoTitle="Secretaria" info="Para contato com a secretaria, os alunos poderão entrar em contato via whatsapp / telefone" />
           </ScrollView>
         </View>
       </View>

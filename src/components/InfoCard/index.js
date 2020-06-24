@@ -5,12 +5,11 @@ import { Feather } from '@expo/vector-icons/'
 
 import styles from './styles';
 
-export default function infoCard(){
+export default function infoCard({ info, infoTitle }){
   return(
   <View style={styles.cardLayout}>
-    <Text style={styles.cardTitle}>Ipsum Lore</Text>
-    <Text style={styles.cardDescription}>Lorem ipsum dolor sit amet, purto illum accumsan mei ne. 
-    Per an percipitur sadipscing, tollit complectitur ne pri.</Text>
+    <Text style={styles.cardTitle}>{infoTitle}</Text>
+    <Text style={styles.cardDescription}>{info}</Text>
     <Text>Detalhar</Text>
   </View>
 )}
