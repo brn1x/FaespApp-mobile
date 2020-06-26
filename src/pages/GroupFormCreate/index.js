@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import DropDown from 'react-native-picker-select';
 import { Formik } from 'formik'
 
@@ -94,144 +94,139 @@ export default function GroupFormCreate ({ navigation }) {
     <DismissKeyboard>
       <View style={styles.container}>
         <Header btnType='goBack' navigation={navigation} titleText={'Criação de Grupo'} />
-        <Formik
-          validationSchema={groupSchema}
-          initialValues={{
-            name: '',
-            category_id: '',
-            description: '',
-            qtt_min_students: '',
-            qtt_max_students: '',
-            qtt_meetings: '',
-            period: '',
-            campus_id: ''
-          }}
-          onSubmit={values => {
-            createGroup(values)
-          }}
-          
-        >
-          {props => (
-            <>
-            <View style={styles.form}>
-              <TextInput style={styles.input} placeholder="Nome do Grupo" placeholderTextColor="#888" 
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={props.values.name}
-                onChangeText={props.handleChange('name')}
-                onBlur={props.handleBlur('name')}
-              />
-              <Text style={styles.errorText}>{ props.touched.name && props.errors.name }</Text>
-
-              <DropDown
-                style={{ viewContainer: styles.dropDown, inputAndroid: { color: '#000' } }}
-                onValueChange={value => {
-                  props.values.category_id = value
-                  props.handleChange('category_id')
-                }}
-                items={categories.map(category => {
-                  return {
-                    label: category.name,
-                    value: category.id
-                  }
-                })}
-              />
-              <Text style={styles.errorText}>{ props.touched.category_id && props.errors.category_id }</Text>
-
-              <TextInput style={styles.inputDescription} placeholder="Descrição" placeholderTextColor="#888" 
-                autoCapitalize="none"
-                multiline={true}
-                numberOfLines={5}
-                autoCorrect={false}
-                value={props.values.description}
-                onChangeText={props.handleChange('description')}
-                onBlur={props.handleBlur('description')}
-              />
-              <Text style={styles.errorText}>{ props.touched.description && props.errors.description }</Text>
-
-              <Text style={styles.infoText}>Quantidades:</Text>
-
-              <View style={styles.rowFlex}>
-                <TextInput style={styles.selectInput} placeholder="Mín de Alunos" placeholderTextColor="#888" 
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  value={props.values.qtt_min_students}
-                  onChangeText={props.handleChange('qtt_min_students')}
-                  onBlur={props.handleBlur('qtt_min_students')}
-                />
-
-                <TextInput style={styles.selectInput} placeholder="Máx de Alunos" placeholderTextColor="#888" 
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  value={props.values.qtt_max_students}
-                  onChangeText={props.handleChange('qtt_max_students')}
-                  onBlur={props.handleBlur('qtt_max_students')}
-                />
-              </View>
-
-              <TextInput style={styles.selectInput} placeholder="Encontros" placeholderTextColor="#888" 
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={props.values.qtt_meetings}
-                onChangeText={props.handleChange('qtt_meetings')}
-                onBlur={props.handleBlur('qtt_meetings')}
-              />
-              { props.errors.qtt_min_students ||
-                props.errors.qtt_max_students ||
-                props.errors.qtt_meetings
-                ? (
-                  <Text style={styles.errorText}>Quantidades são obrigatórias e precisam ser numéricas</Text>
-                )
-                : ( <Text></Text> )
-              }
-              <View style={styles.rowFlex}>
-                  <DropDown
-                    style={{ viewContainer: styles.dropDownDouble, inputAndroid: { color: '#000' } }}
-                    onValueChange={value => {
-                      props.values.period = value
-                      props.handleChange('period')
-                    }}
-                    items={[
-                      {
-                        label: 'MANHÃ',
-                        value: 'M'
-                      },
-                      {
-                        label: 'TARDE',
-                        value: 'T'
-                      },
-                      {
-                        label: 'NOITE',
-                        value: 'N'
-                      }
-                    ]}
+          <Formik
+            validationSchema={groupSchema}
+            initialValues={{
+              name: '',
+              category_id: '',
+              description: '',
+              qtt_min_students: '',
+              qtt_max_students: '',
+              qtt_meetings: '',
+              period: '',
+              campus_id: ''
+            }}
+            onSubmit={values => {
+              createGroup(values)
+            }}
+          >
+            {props => (
+              <ScrollView contentContainerStyle={{ height: 650 }}>
+                <View style={styles.form}>
+                  <TextInput style={styles.input} placeholder="Nome do Grupo" placeholderTextColor="#888" 
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    value={props.values.name}
+                    onChangeText={props.handleChange('name')}
+                    onBlur={props.handleBlur('name')}
                   />
-                
+                  <Text style={styles.errorText}>{ props.touched.name && props.errors.name }</Text>
+
                   <DropDown
-                    style={{ viewContainer: styles.dropDownDouble, inputAndroid: { color: '#000' } }}
+                    style={{ viewContainer: styles.dropDown, inputAndroid: { color: '#000' } }}
                     onValueChange={value => {
-                      props.values.campus_id = value
-                      props.handleChange('campus_id')
+                      props.values.category_id = value
+                      props.handleChange('category_id')
                     }}
-                    items={campuses.map(campus => {
+                    items={categories.map(category => {
                       return {
-                        label: campus.name,
-                        value: campus.id
+                        label: category.name,
+                        value: category.id
                       }
                     })}
                   />
-              </View>
-            </View>
-            <TouchableOpacity style={styles.button} onPress={props.handleSubmit}>
-              <Text style={styles.buttonText}>Cadastrar</Text>
-            </TouchableOpacity>
-            </>
-          )}
-        </Formik>
+                  <Text style={styles.errorText}>{ props.touched.category_id && props.errors.category_id }</Text>
 
+                  <TextInput style={styles.inputDescription} placeholder="Descrição" placeholderTextColor="#888" 
+                    autoCapitalize="none"
+                    multiline={true}
+                    numberOfLines={5}
+                    autoCorrect={false}
+                    value={props.values.description}
+                    onChangeText={props.handleChange('description')}
+                    onBlur={props.handleBlur('description')}
+                  />
+                  <Text style={styles.errorText}>{ props.touched.description && props.errors.description }</Text>
 
+                  <Text style={styles.infoText}>Quantidades:</Text>
 
+                  <View style={styles.rowFlex}>
+                    <TextInput style={styles.selectInput} placeholder="Mín de Alunos" placeholderTextColor="#888" 
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      value={props.values.qtt_min_students}
+                      onChangeText={props.handleChange('qtt_min_students')}
+                      onBlur={props.handleBlur('qtt_min_students')}
+                    />
 
+                    <TextInput style={styles.selectInput} placeholder="Máx de Alunos" placeholderTextColor="#888" 
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      value={props.values.qtt_max_students}
+                      onChangeText={props.handleChange('qtt_max_students')}
+                      onBlur={props.handleBlur('qtt_max_students')}
+                    />
+                  </View>
+
+                  <TextInput style={styles.selectInput} placeholder="Encontros" placeholderTextColor="#888" 
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    value={props.values.qtt_meetings}
+                    onChangeText={props.handleChange('qtt_meetings')}
+                    onBlur={props.handleBlur('qtt_meetings')}
+                  />
+                  { props.errors.qtt_min_students ||
+                    props.errors.qtt_max_students ||
+                    props.errors.qtt_meetings
+                    ? (
+                      <Text style={styles.errorText}>Quantidades são obrigatórias e precisam ser numéricas</Text>
+                    )
+                    : ( <Text></Text> )
+                  }
+                  <View style={styles.rowFlex}>
+                    <DropDown
+                      style={{ viewContainer: styles.dropDownDouble, inputAndroid: { color: '#000' } }}
+                      onValueChange={value => {
+                        props.values.period = value
+                        props.handleChange('period')
+                      }}
+                      items={[
+                        {
+                          label: 'MANHÃ',
+                          value: 'M'
+                        },
+                        {
+                          label: 'TARDE',
+                          value: 'T'
+                        },
+                        {
+                          label: 'NOITE',
+                          value: 'N'
+                        }
+                      ]}
+                    />
+                  
+                    <DropDown
+                      style={{ viewContainer: styles.dropDownDouble, inputAndroid: { color: '#000' } }}
+                      onValueChange={value => {
+                        props.values.campus_id = value
+                        props.handleChange('campus_id')
+                      }}
+                      items={campuses.map(campus => {
+                        return {
+                          label: campus.name,
+                          value: campus.id
+                        }
+                      })}
+                    />
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.button} onPress={props.handleSubmit}>
+                  <Text style={styles.buttonText}>Cadastrar</Text>
+                </TouchableOpacity>
+              </ScrollView>
+            )}
+          </Formik>
       </View>
     </DismissKeyboard>
   );
