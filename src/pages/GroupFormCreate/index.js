@@ -38,6 +38,10 @@ export default function GroupFormCreate ({ navigation }) {
   const [ra, setRa] = useState('');
   const [token, setToken] = useState('');
 
+  const [categoryId, setCategoryId] = useState(0);
+  const [campusId, setCampusId] = useState(0);
+  const [period, setPeriod] = useState('');
+
   const [categories, setCategories] = useState([]);
   const [campuses, setCampuses] = useState([]);
 
@@ -114,20 +118,20 @@ export default function GroupFormCreate ({ navigation }) {
           {props => (
             <>
             <View style={styles.form}>
-              <TextInput style={styles.input} placeholder="Nome do Grupo" placeholderTextColor="#888" 
+              <TextInput style={ props.errors.name ? styles.errorInput : styles.input } placeholder="Nome do Grupo" placeholderTextColor="#888" 
                 autoCapitalize="none"
                 autoCorrect={false}
                 value={props.values.name}
                 onChangeText={props.handleChange('name')}
                 onBlur={props.handleBlur('name')}
               />
-              <Text style={styles.errorText}>{ props.touched.name && props.errors.name }</Text>
 
               <DropDown
-                style={{ viewContainer: styles.dropDown, inputAndroid: { color: '#000' } }}
+                style={{ viewContainer: categoryId === 0 ? styles.errorDropDown : styles.dropDown, inputAndroid: { color: '#000' } }}
                 onValueChange={value => {
                   props.values.category_id = value
                   props.handleChange('category_id')
+                  setCategoryId(value)
                 }}
                 items={categories.map(category => {
                   return {
@@ -136,9 +140,8 @@ export default function GroupFormCreate ({ navigation }) {
                   }
                 })}
               />
-              <Text style={styles.errorText}>{ props.touched.category_id && props.errors.category_id }</Text>
 
-              <TextInput style={styles.inputDescription} placeholder="Descrição" placeholderTextColor="#888" 
+              <TextInput style={props.errors.description ? styles.errorInputDescription : styles.inputDescription} placeholder="Descrição" placeholderTextColor="#888" 
                 autoCapitalize="none"
                 multiline={true}
                 numberOfLines={5}
@@ -147,12 +150,11 @@ export default function GroupFormCreate ({ navigation }) {
                 onChangeText={props.handleChange('description')}
                 onBlur={props.handleBlur('description')}
               />
-              <Text style={styles.errorText}>{ props.touched.description && props.errors.description }</Text>
 
               <Text style={styles.infoText}>Quantidades:</Text>
 
               <View style={styles.rowFlex}>
-                <TextInput style={styles.selectInput} placeholder="Mín de Alunos" placeholderTextColor="#888" 
+                <TextInput style={props.errors.qtt_min_students ? styles.errorNumberInput : styles.numberInput} placeholder="Mín de Alunos" placeholderTextColor="#888" 
                   autoCapitalize="none"
                   autoCorrect={false}
                   value={props.values.qtt_min_students}
@@ -160,7 +162,7 @@ export default function GroupFormCreate ({ navigation }) {
                   onBlur={props.handleBlur('qtt_min_students')}
                 />
 
-                <TextInput style={styles.selectInput} placeholder="Máx de Alunos" placeholderTextColor="#888" 
+                <TextInput style={props.errors.qtt_max_students ? styles.errorNumberInput : styles.numberInput} placeholder="Máx de Alunos" placeholderTextColor="#888" 
                   autoCapitalize="none"
                   autoCorrect={false}
                   value={props.values.qtt_max_students}
@@ -169,27 +171,21 @@ export default function GroupFormCreate ({ navigation }) {
                 />
               </View>
 
-              <TextInput style={styles.selectInput} placeholder="Encontros" placeholderTextColor="#888" 
+              <TextInput style={props.errors.qtt_meetings ? styles.errorNumberInput : styles.numberInput} placeholder="Encontros" placeholderTextColor="#888" 
                 autoCapitalize="none"
                 autoCorrect={false}
                 value={props.values.qtt_meetings}
                 onChangeText={props.handleChange('qtt_meetings')}
                 onBlur={props.handleBlur('qtt_meetings')}
               />
-              { props.errors.qtt_min_students ||
-                props.errors.qtt_max_students ||
-                props.errors.qtt_meetings
-                ? (
-                  <Text style={styles.errorText}>Quantidades são obrigatórias e precisam ser numéricas</Text>
-                )
-                : ( <Text></Text> )
-              }
+
               <View style={styles.rowFlex}>
                   <DropDown
-                    style={{ viewContainer: styles.dropDownDouble, inputAndroid: { color: '#000' } }}
+                    style={{ viewContainer: period === '' ? styles.errorDropDownDouble : styles.dropDownDouble, inputAndroid: { color: '#000' } }}
                     onValueChange={value => {
                       props.values.period = value
                       props.handleChange('period')
+                      setPeriod(value)
                     }}
                     items={[
                       {
@@ -208,10 +204,11 @@ export default function GroupFormCreate ({ navigation }) {
                   />
                 
                   <DropDown
-                    style={{ viewContainer: styles.dropDownDouble, inputAndroid: { color: '#000' } }}
+                    style={{ viewContainer: campusId === 0 ? styles.errorDropDownDouble : styles.dropDownDouble, inputAndroid: { color: '#000' } }}
                     onValueChange={value => {
                       props.values.campus_id = value
                       props.handleChange('campus_id')
+                      setCampusId(value)
                     }}
                     items={campuses.map(campus => {
                       return {
@@ -228,10 +225,6 @@ export default function GroupFormCreate ({ navigation }) {
             </>
           )}
         </Formik>
-
-
-
-
       </View>
     </DismissKeyboard>
   );
