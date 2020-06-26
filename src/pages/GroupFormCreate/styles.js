@@ -14,11 +14,11 @@ export default StyleSheet.create({
   },
 
   input: {
+    borderWidth: 1,
+    borderColor: '#666',
     flex: 1,
     minHeight: 25,
     maxHeight: 50,
-    borderWidth: 1,
-    borderColor: '#666',
     borderRadius: 5,
     width: 250,
     margin: 8,
@@ -27,11 +27,11 @@ export default StyleSheet.create({
   },
 
   inputDescription: {
+    borderWidth: 1,
+    borderColor: '#666',
     flex: 1,
     minHeight: 60,
     maxHeight: 140,
-    borderWidth: 1,
-    borderColor: '#666',
     borderRadius: 5,
     width: 250,
     margin: 8,
@@ -61,7 +61,7 @@ export default StyleSheet.create({
     fontSize: 16,
   },
 
-  selectInput: {
+  numberInput: {
     borderWidth: 1,
     borderColor: '#666',
     borderRadius: 5,
@@ -74,11 +74,11 @@ export default StyleSheet.create({
   },
 
   dropDown: {
+    borderWidth: 1,
+    borderColor: '#666',
     flex: 1,
     minHeight: 25,
     maxHeight: 50,
-    borderWidth: 1,
-    borderColor: '#666',
     borderRadius: 5,
     width: 250,
     margin: 8,
@@ -88,12 +88,12 @@ export default StyleSheet.create({
   },
 
   dropDownDouble: {
+    borderWidth: 1,
+    borderColor: '#666',
     flex: 1,
     color: '#000',
     minHeight: 25,
     maxHeight: 50,
-    borderWidth: 1,
-    borderColor: '#666',
     borderRadius: 5,
     width: 140,
     margin: 8,
@@ -108,14 +108,70 @@ export default StyleSheet.create({
     margin: 5
   },
 
-  errorTextDouble: {
-    color: 'crimson',
-    fontWeight: 'bold',
-    width: 120
+  errorInput:{
+    borderWidth: 1,
+    borderColor: 'crimson', 
+    flex: 1,
+    minHeight: 25,
+    maxHeight: 50,
+    borderRadius: 5,
+    width: 250,
+    margin: 8,
+    paddingHorizontal: 8,
+    textAlign: 'center'
   },
 
-  errorText: {
-    color: 'crimson',
-    fontWeight: 'bold'
-  }
+  errorDropDown:{
+    borderWidth: 1,
+    borderColor: 'crimson',
+    flex: 1,
+    minHeight: 25,
+    maxHeight: 50,
+    borderRadius: 5,
+    width: 250,
+    margin: 8,
+    paddingHorizontal: 8,
+    textAlign: 'center',
+    alignSelf: 'center'
+  },
+
+  errorInputDescription: {
+    borderWidth: 1,
+    borderColor: 'crimson',
+    flex: 1,
+    minHeight: 60,
+    maxHeight: 140,
+    borderRadius: 5,
+    width: 250,
+    margin: 8,
+    paddingHorizontal: 8,
+    textAlign: 'center'
+  },
+
+  errorNumberInput: {
+    borderWidth: 1,
+    borderColor: 'crimson',
+    borderRadius: 5,
+    paddingHorizontal: 15,
+    height: 35,
+    width: 120,
+    margin: 5,
+    textAlign: 'center',
+    alignSelf: 'center'
+  },
+
+  errorDropDownDouble: {
+    borderWidth: 1,
+    borderColor: 'crimson',
+    flex: 1,
+    color: '#000',
+    minHeight: 25,
+    maxHeight: 50,
+    borderRadius: 5,
+    width: 140,
+    margin: 8,
+    paddingHorizontal: 8,
+    textAlign: 'center',
+    alignSelf: 'center'
+  },
 })
