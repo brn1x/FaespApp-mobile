@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import DropDown from 'react-native-picker-select';
 import { Formik } from 'formik'
 
@@ -14,34 +14,18 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const groupSchema = yup.object({
   name: yup.string().required('O Nome do Grupo é Obrigatório').min(4),
-  category_id: yup.string().required('A Categoria é Obrigatória').test('is-number', 'Categoria deve ser numerica', value => {
-    return !isNaN(value)
-  }),
+  category_id: yup.string().required('A Categoria é Obrigatória').test('is-number', 'Categoria deve ser numerica', value => { return !isNaN(value) }),
   description: yup.string().required('A Descrição do Grupo é Obrigatória').min(24),
-  qtt_min_students: yup.string().required().test('is-number', 'Quantidades devem ser numericas', value => {
-    return !isNaN(value)
-  }),
-  qtt_max_students: yup.string().required().test('is-number', 'Quantidades devem ser numericas', value => {
-    return !isNaN(value)
-  }),
-  qtt_meetings: yup.string().required().test('is-number', 'Quantidades devem ser numericas', value => {
-    return !isNaN(value)
-  }),
-  period: yup.string().required('O Periodo é Obrigatório').max(1).test('verify-period', 'Periodo deve ser M-T-N', value => {
-    return value === 'M' || value === 'T' || value === 'N'
-  }),
-  campus_id: yup.string().required('O Campus é Obrigatório').test('is-number', 'Campus deve ser numero', value => {
-    return !isNaN(value)
-  })
+  qtt_min_students: yup.string().required('Quantidades são obrigatórias').test('is-number', 'Quantidades devem ser numericas', value => { return !isNaN(value) }),
+  qtt_max_students: yup.string().required('Quantidades são obrigatórias').test('is-number', 'Quantidades devem ser numericas', value => { return !isNaN(value) }),
+  qtt_meetings: yup.string().required('Quantidades são obrigatórias').test('is-number', 'Quantidades devem ser numericas', value => { return !isNaN(value) }),
+  period: yup.string().required('O Periodo é Obrigatório').max(1).test('verify-period', 'Periodo deve ser M-T-N', value => { return value === 'M' || value === 'T' || value === 'N' }),
+  campus_id: yup.string().required('O Campus é Obrigatório').test('is-number', 'Campus deve ser numero', value => { return !isNaN(value) })
 })
 
 export default function GroupFormCreate ({ navigation }) {
   const [ra, setRa] = useState('');
   const [token, setToken] = useState('');
-
-  const [categoryId, setCategoryId] = useState(0);
-  const [campusId, setCampusId] = useState(0);
-  const [period, setPeriod] = useState('');
 
   const [categories, setCategories] = useState([]);
   const [campuses, setCampuses] = useState([]);
@@ -91,7 +75,11 @@ export default function GroupFormCreate ({ navigation }) {
       } 
     })
 
-    // Alert: Group creation request created
+    Alert.alert(
+      `${data.name}`,
+      'Criação do grupo enviado para aprovação!',
+      [{ text: 'OK', onPress: () => '' }]
+    )
     navigation.goBack();
   }
 
@@ -111,10 +99,10 @@ export default function GroupFormCreate ({ navigation }) {
             period: '',
             campus_id: ''
           }}
-          onSubmit={values => {
-            createGroup(values)
-          }}
-          
+          onSubmit={ values => {
+              createGroup(values)
+            }
+          }
         >
           {props => (
             <ScrollView contentContainerStyle={{ height: 650 }}>
@@ -124,11 +112,12 @@ export default function GroupFormCreate ({ navigation }) {
                   autoCorrect={false}
                   value={props.values.name}
                   onChangeText={props.handleChange('name')}
-                  onBlur={props.handleBlur('name')}
                 />
-
+                <Text style={ styles.errorText }>{ props.errors.name }</Text>
+                
                 <DropDown
-                  style={{ viewContainer: categoryId === 0 ? styles.errorDropDown : styles.dropDown, inputAndroid: { color: '#000' } }}
+                  style={{ viewContainer: props.errors.category_id ? styles.errorDropDown : styles.dropDown, inputAndroid: { color: '#000' } }}
+                  placeholder={{ label: 'Categoria', value: 0 }}
                   onValueChange={value => {
                     props.values.category_id = value
                     props.handleChange('category_id')
@@ -141,6 +130,7 @@ export default function GroupFormCreate ({ navigation }) {
                     }
                   })}
                 />
+                <Text style={ styles.errorText }>{ props.errors.category_id }</Text>
 
                 <TextInput style={props.errors.description ? styles.errorInputDescription : styles.inputDescription} placeholder="Descrição" placeholderTextColor="#888" 
                   autoCapitalize="none"
@@ -149,40 +139,36 @@ export default function GroupFormCreate ({ navigation }) {
                   autoCorrect={false}
                   value={props.values.description}
                   onChangeText={props.handleChange('description')}
-                  onBlur={props.handleBlur('description')}
                 />
+                <Text style={ styles.errorText }>{ props.errors.description }</Text>
 
                 <Text style={styles.infoText}>Quantidades:</Text>
 
                 <View style={styles.rowFlex}>
                   <TextInput style={props.errors.qtt_min_students ? styles.errorNumberInput : styles.numberInput} placeholder="Mín de Alunos" placeholderTextColor="#888" 
-                    autoCapitalize="none"
-                    autoCorrect={false}
                     value={props.values.qtt_min_students}
                     onChangeText={props.handleChange('qtt_min_students')}
-                    onBlur={props.handleBlur('qtt_min_students')}
+                    keyboardType='numeric'
                   />
 
                   <TextInput style={props.errors.qtt_max_students ? styles.errorNumberInput : styles.numberInput} placeholder="Máx de Alunos" placeholderTextColor="#888" 
-                    autoCapitalize="none"
-                    autoCorrect={false}
                     value={props.values.qtt_max_students}
                     onChangeText={props.handleChange('qtt_max_students')}
-                    onBlur={props.handleBlur('qtt_max_students')}
+                    keyboardType='numeric'
                   />
                 </View>
 
                 <TextInput style={props.errors.qtt_meetings ? styles.errorNumberInput : styles.numberInput} placeholder="Encontros" placeholderTextColor="#888" 
-                  autoCapitalize="none"
-                  autoCorrect={false}
                   value={props.values.qtt_meetings}
                   onChangeText={props.handleChange('qtt_meetings')}
-                  onBlur={props.handleBlur('qtt_meetings')}
+                  keyboardType='numeric'
                 />
+                <Text style={ styles.errorText }>{ props.errors.qtt_min_students || props.errors.qtt_max_students || props.errors.qtt_meeting }</Text>
 
                 <View style={styles.rowFlex}>
                     <DropDown
-                      style={{ viewContainer: period === '' ? styles.errorDropDownDouble : styles.dropDownDouble, inputAndroid: { color: '#000' } }}
+                      style={{ viewContainer: props.errors.period ? styles.errorDropDownDouble : styles.dropDownDouble, inputAndroid: { color: '#000' } }}
+                      placeholder={{ label: 'Periodo', value: 0 }}
                       onValueChange={value => {
                         props.values.period = value
                         props.handleChange('period')
@@ -205,19 +191,26 @@ export default function GroupFormCreate ({ navigation }) {
                     />
                   
                     <DropDown
-                      style={{ viewContainer: campusId === 0 ? styles.errorDropDownDouble : styles.dropDownDouble, inputAndroid: { color: '#000' } }}
+                      style={{ viewContainer: props.errors.category_id ? styles.errorDropDownDouble : styles.dropDownDouble, inputAndroid: { color: '#000' } }}
+                      placeholder={{ label: 'Campus', value: 0 }}
                       onValueChange={value => {
                         props.values.campus_id = value
                         props.handleChange('campus_id')
                         setCampusId(value)
                       }}
-                      items={campuses.map(campus => {
+                      items={
+                        
+                        campuses.map(campus => {
                         return {
                           label: campus.name,
-                          value: campus.id
+                          value: campus.id,
                         }
                       })}
                     />
+                </View>
+                <View style={styles.rowFlex}>
+                  <Text style={ styles.errorText }>{ props.errors.period }</Text>
+                  <Text style={ styles.errorText }>{ props.errors.campus_id }</Text>
                 </View>
               </View>
               <TouchableOpacity style={styles.button} onPress={props.handleSubmit}>

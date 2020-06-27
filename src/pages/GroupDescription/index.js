@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 
 import * as SecureStore from 'expo-secure-store';
 import api from '../../services/api';
@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/Feather'
 export default function GroupDescription ({ navigation }) {
   const [ra, setRa] = useState('');
   const [token, setToken] = useState('');
+  const [optAlert, setOptAlert] = useState('');
   const route = useRoute();
 
   const group = route.params.group;
@@ -36,38 +37,60 @@ export default function GroupDescription ({ navigation }) {
     fillRa();
   }, [])
 
-  async function handleSubscribe (groupId) {
-    // Alert: Deseja mesmo se inscrever nesse grupo?
-    const data = {
-      ra
-    }
-    try {
-      await api.post(`subscription/${groupId}`, data, {
-        headers: {
-          authorization: token
+  async function handleSubscribe (groupId, groupName) {
+    Alert.alert(
+      `${groupName}`,
+      'Tem certeza que quer se inscrever no grupo?',
+      [
+        { text: 'Cancelar', onPress: () => '' },
+        { text: 'Inscrever-se', onPress: async () => {
+            const data = {
+              ra
+            }
+            console.log("recebe RA")
+            try {
+              await api.post(`subscription/${groupId}`, data, {
+                headers: {
+                  authorization: token
+                }
+              })
+              console.log("api executada")
+              navigation.navigate('GroupHome', { refresh: true })
+            } catch (error) {
+              console.log(error)
+            }
+          } 
         }
-      })
-      navigation.navigate('GroupHome', { refresh: true })
-    } catch (error) {
-      console.log(error)
-    }
+      ],
+      { cancelable: false }
+    );
   }
 
-  async function handleUnsubscribe (groupId) {
-    // Alert: Deseja mesmo se desinscrever desse grupo?
-    try {
-      await api.delete(`subscription/${groupId}`, {
-        data: {
-          ra
+  async function handleUnsubscribe (groupId, groupName) {
+    Alert.alert(
+      `${groupName}`,
+      'Tem certeza que quer se desinscrever no grupo?',
+      [
+        { text: 'Cancelar', onPress: () => '' },
+        { text: 'Desinscrever', onPress: async () => {
+            try {
+              await api.delete(`subscription/${groupId}`, {
+                data: {
+                  ra
+                },
+                headers: {
+                  authorization: token
+                } 
+              })
+              navigation.navigate('GroupHome', { refresh: true })
+            } catch (error) {
+              console.log(error)
+            }
+          }   
         },
-        headers: {
-          authorization: token
-        } 
-      })
-      navigation.navigate('GroupHome', { refresh: true })
-    } catch (error) {
-      console.log(error)
-    }
+      ],
+      { cancelable: false }
+    );
   }
 
   return (
@@ -90,11 +113,11 @@ export default function GroupDescription ({ navigation }) {
         </ScrollView>
         <View style={styles.buttonContainer}>
             { type === 'register' ? (
-              <TouchableOpacity style={styles.button} onPress={() => handleSubscribe(group.id)}>
+              <TouchableOpacity style={styles.button} onPress={() => handleSubscribe(group.id, group.name)}>
                 <Text style={styles.buttonText}>Cadastrar</Text>
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity style={styles.button} onPress={() => handleUnsubscribe(group.id)}>
+              <TouchableOpacity style={styles.button} onPress={() => handleUnsubscribe(group.id, group.name)}>
                 <Text style={styles.buttonText}>Sair do Grupo</Text>
               </TouchableOpacity>
             ) }

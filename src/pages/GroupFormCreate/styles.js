@@ -108,6 +108,14 @@ export default StyleSheet.create({
     margin: 5
   },
 
+  errorText: {
+    fontSize: 12,
+    fontStyle: 'italic',
+    fontWeight: '600',
+    color: 'crimson',
+    marginHorizontal: 30
+  },
+
   errorInput:{
     borderWidth: 1,
     borderColor: 'crimson', 
