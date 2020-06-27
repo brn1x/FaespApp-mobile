@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, TouchableOpacity, TextInput, Text } from 'react-native';
+import { View, FlatList, TouchableOpacity, TextInput, Text, Alert } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 import styles from './styles';
@@ -10,6 +10,8 @@ import Header from '../../components/Header'
 import DismissKeyboard from '../../components/DismissKeyboard'
 
 import api from '../../services/api';
+
+import validateCreateDate from '../../utils/validateCreateDate';
 
 export default function GroupList ({ navigation }) {
   const [groups, setGroups] = useState([]);
@@ -51,8 +53,14 @@ export default function GroupList ({ navigation }) {
     navigation.navigate('GroupDescription', { group, type });
   }
 
-  function createGroupForm () {
-    navigation.navigate('GroupFormCreate');
+  async function createGroupForm () {
+    await validateCreateDate(token)
+      .then(date => {
+        if(date){
+          return navigation.navigate('GroupFormCreate');
+        }
+        return Alert.alert('Data para criação de grupos expirou!')
+      })
   }
 
   return (

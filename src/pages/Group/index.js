@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
 import Header from '../../components/Header'
 import GroupCard from '../../components/GroupCard'
 
 import * as SecureStore from 'expo-secure-store';
 import api from '../../services/api'
+
+import validateSubscriptionDate from '../../utils/validateSubscriptionDate';
 
 import styles from './styles'
 import Icon from 'react-native-vector-icons/Feather'
@@ -46,8 +48,14 @@ export default function Group ({ navigation, route }) {
     route.params.refresh = false;
   }, [ra, refresh])
 
-  function moveToGroupList () {
-    navigation.navigate('GroupList')
+  async function moveToGroupList () {
+    await validateSubscriptionDate(token)
+      .then(date => {
+        if(date){
+          return navigation.navigate('GroupList')
+        }
+        return Alert.alert('Data para inscrição aos grupos expirou!')
+      })
   }
 
   function moveToDescGroup (group) {
