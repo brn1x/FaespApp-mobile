@@ -47,14 +47,12 @@ export default function GroupDescription ({ navigation }) {
             const data = {
               ra
             }
-            console.log("recebe RA")
             try {
               await api.post(`subscription/${groupId}`, data, {
                 headers: {
                   authorization: token
                 }
               })
-              console.log("api executada")
               navigation.navigate('GroupHome', { refresh: true })
             } catch (error) {
               console.log(error)

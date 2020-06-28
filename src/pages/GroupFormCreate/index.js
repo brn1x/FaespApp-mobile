@@ -121,7 +121,6 @@ export default function GroupFormCreate ({ navigation }) {
                   onValueChange={value => {
                     props.values.category_id = value
                     props.handleChange('category_id')
-                    setCategoryId(value)
                   }}
                   items={categories.map(category => {
                     return {
@@ -172,7 +171,6 @@ export default function GroupFormCreate ({ navigation }) {
                       onValueChange={value => {
                         props.values.period = value
                         props.handleChange('period')
-                        setPeriod(value)
                       }}
                       items={[
                         {
@@ -196,10 +194,8 @@ export default function GroupFormCreate ({ navigation }) {
                       onValueChange={value => {
                         props.values.campus_id = value
                         props.handleChange('campus_id')
-                        setCampusId(value)
                       }}
                       items={
-                        
                         campuses.map(campus => {
                         return {
                           label: campus.name,

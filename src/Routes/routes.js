@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useReducer } from 'react';
-import { ActivityIndicator, View } from 'react-native'
+import { ActivityIndicator, View, Alert } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 
 import LoginStack from './LoginStack'
@@ -47,22 +47,26 @@ export default function Routes () {
 
   const authContext = useMemo(() => ({
     signIn: async (login, password) => {
-      const response = await api.post('/session', { login, password });
+      try {
+        const response = await api.post('/session', { login, password });
 
-      if (response.data.token) {
-        try {
+        if (response.data.token) {
           await SecureStore.setItemAsync('ra', login)
           await SecureStore.setItemAsync('idAluno', response.data.idAluno.toString());
           await SecureStore.setItemAsync('username', response.data.name);
           await SecureStore.setItemAsync('avatar', response.data.avatar);
           await SecureStore.setItemAsync('token', response.data.token);
-        } catch (error) {
-          console.log(error);
-        }
 
-        dispatch({ type: 'LOGIN', token: response.data.token, logged: true });
-      } else {
-        dispatch({ type: 'LOGOUT' });
+          dispatch({ type: 'LOGIN', token: response.data.token, logged: true });
+        }else {
+          dispatch({ type: 'LOGOUT' });
+        }
+      } catch (error) {
+        console.log(error);
+        Alert.alert(
+          'Login Faesp',
+          'Erro de login, Verifique suas credenciais',
+        )
       }
     },
     signOut: async () => {
