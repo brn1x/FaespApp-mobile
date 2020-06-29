@@ -43,7 +43,7 @@ export default function DrawerContent (props) {
             <View style={styles.headerContent}>
               <Avatar.Image source={{ uri: avatar || 'https://faesp.jacad.com.br/academico/images/perfil/6749/100' }} size={50} />
               <View style={styles.headerTexts}>
-                <Title style={styles.title}>{ username }</Title>
+                <Title style={styles.title}>{ username.slice(0, 25) }</Title>
                 <Caption style={styles.caption}>{ course }</Caption>
               </View>
             </View>
@@ -75,7 +75,7 @@ export default function DrawerContent (props) {
             />
 
             <DrawerItem
-              label="Matérias"
+              label="Disciplinas"
               onPress={() => {props.navigation.navigate('Subject')}}
               icon={({color, size}) => (
                 <Icon name="text-subject" color={color} size={size} />

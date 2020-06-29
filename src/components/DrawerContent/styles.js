@@ -9,11 +9,11 @@ export default StyleSheet.create({
     marginTop: 15
   },
   headerTexts: {
-    marginLeft: 15,
+    marginLeft: 10,
     flexDirection: 'column'
   },
   userInfoSection: {
-    paddingLeft: 20
+    paddingLeft: 10
   },
   title: {
     fontSize: 16,
